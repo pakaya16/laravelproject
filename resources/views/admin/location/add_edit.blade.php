@@ -27,11 +27,11 @@
 	                            </div>
 	                            <div class="form-group">
 	                                <label>{{ trans('banner_messages.sizeWidth') }}</label>
-	                                <input class="form-control" name="width" value="">
+	                                <input class="form-control" name="width" value="{{ inputValue('width', $data) }}">
 	                            </div>
 	                            <div class="form-group">
 	                                <label>{{ trans('banner_messages.sizeHeight') }}</label>
-	                                <input class="form-control" name="height" value="">
+	                                <input class="form-control" name="height" value="{{ inputValue('height', $data) }}">
 	                            </div>
 	                            <div class="form-group">
 	                                <label>{{ trans('banner_messages.status') }}</label>

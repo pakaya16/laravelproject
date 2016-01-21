@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\LocationRequest;
 use App\Http\Controllers\Controller;
-use View;
+use App\Model\Admin\Location;
+use View,Config;
 
 class LocationController extends Controller
 {
@@ -19,9 +20,30 @@ class LocationController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function index()
+    public function index(Request $request)
     {
-        return View::make('admin.location.index') ;
+        if ($request->has('q'))
+        {
+            $search                 = e($request->input('q')) ;
+            $setData['data']        = Location::orWhere('id', 'LIKE', '%'.$search.'%')
+                                        ->orWhere('group_name', 'LIKE', '%'.$search.'%')
+                                        ->orderBy('id', 'desc')
+                                        ->paginate(Config::get('admin.defultRecord'));      
+
+            $setData['pagination']  = $setData['data']->appends(['q' => $request->input('q')])->links() ;
+            $setData['search']      = $request->input('q') ; 
+        }
+        else
+        {
+            $setData['data']        = Location::orderBy('id' , 'desc')
+                                        ->paginate(Config::get('admin.defultRecord'));  
+
+            $setData['pagination']  = $setData['data']->links() ;
+        }
+
+        d($request->session->all()) ;
+
+        return View::make('admin.location.index', $setData) ;
     }
 
     /**
@@ -45,10 +67,10 @@ class LocationController extends Controller
     */
     public function store(LocationRequest $request)
     {
-        $dataInsert                 = $request->except('_token') ;
-
-
-        d($dataInsert) ;
+        $dataInsert                     = $request->except(['_token','width','height']) ;
+        $dataInsert['size_display']     = $request->input('width').','.$request->input('height');
+        Location::create(beforeSql($dataInsert));
+        return redirect()->action('Admin\LocationController@index');
     }
 
     /**

@@ -54,7 +54,7 @@
                                             <td>{{ $val->id }}</td>
                                             <td>{{ $val->username }}</td>
                                             <td>{{ $val->first_name . ' ' . $val->last_name }}</td>
-                                            <td>{{ (isset($val->group_user[0])?$val->group_user[0]->group_name:'') }}</td>
+                                            <td>{{ (isset($val->group_user)?$val->group_user->group_name:'') }}</td>
                                             <td>{{ $val->created_at }}</td>
                                             <td>{{ $val->status }}</td>
                                             <td class="center">

@@ -12,14 +12,14 @@ class CreateLocationTable extends Migration
      */
     public function up()
     {
-        Schema::create('banner_locaion', function (Blueprint $table) {
+        Schema::create('banner_location', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id')->unsigned();
             $table->integer('user_id')->unsigned()->index();
             $table->integer('parent_id')->unsigned()->index();
-            $table->string('locaion_name',255);
+            $table->string('location_name',255);
             $table->integer('sort_order')->unsigned();
-            $table->integer('liit')->unsigned();
+            $table->integer('limit')->unsigned();
             $table->string('size_display',255);
             $table->string('flag_last',255);
             $table->string('type',255);
@@ -36,6 +36,6 @@ class CreateLocationTable extends Migration
      */
     public function down()
     {
-        Schema::drop('banner_locaion');
+        Schema::drop('banner_location');
     }
 }

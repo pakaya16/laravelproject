@@ -2,8 +2,9 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes ;
+use App\Model\Admin\User;
 
-class BannerLocation extends Model {
+class Location extends Model {
 
 	use SoftDeletes;
 	protected $table 		= 'banner_location';
@@ -13,15 +14,17 @@ class BannerLocation extends Model {
 								'id', 
 								'user_id', 
 								'parent_id',
-								'locaion_name',
+								'location_name',
 								'sort_order',
-								'liit',
+								'limit',
 								'size_display',
-								'flag_last','type'
+								'flag_last',
+								'type',
+								'status'
 								];
 
-	public function group_user()
+	public function user()
 	{
-		// return $this->hasMany('App\Model\Admin\GroupUser','id','group_id');
+		return $this->belongsTo(User::class, 'user_id');
 	}
 }
